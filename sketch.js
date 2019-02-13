@@ -5,15 +5,27 @@ var Engine = Matter.Engine,
     Bodies = Matter.Bodies;
 
 var engine, world;
-var b;
+var b, floor;
+let floorWidth, floorHeight;
 
 function setup() {
     createCanvas(600, 400);
     engine = Engine.create();
     world = engine.world;
      // add a box
-    b = Bodies.rectangle((width/2), 10, 50, 50);
+    floorHeight = 50;
+    floorWidth = width;
+    
+    b = Bodies.rectangle((width / 2), 10, 50, 50);
+    floor = Bodies.rectangle((50), height-20, floorWidth, floorHeight, {
+        isStatic: true,
+        chamfer: { radius: 10 }
+    });
+
+    World.add(world, floor);
+
     World.add(world, b);
+
     Engine.run(engine); //better than engine.update(engine) in draw, run in background faster!
 
 
@@ -23,6 +35,7 @@ function draw() {
     background(0);
   //  Engine.update(engine)
     
+    rect(floor.position.x, floor.position.y, floorWidth, floorHeight);
     rect(b.position.x, b.position.y, 50, 50);
     
    /*  
