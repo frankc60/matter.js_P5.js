@@ -5,58 +5,50 @@ var Engine = Matter.Engine,
     Bodies = Matter.Bodies;
 
 var engine, world;
-var b, floor;
-let floorWidth, floorHeight;
-let boxy, boxw;
+var b1,b2,b3, floor;
+//let floorWidth, floorHeight;
+//let boxy, boxw;
 
 function setup() {
-    createCanvas(600, 400);
-    engine = Engine.create();
+    let canvas = createCanvas(800, 600);
+    engine = Engine.create(canvas.elt);
     world = engine.world;
-     // add a box
-    floorHeight = 50;
-    floorWidth = width;
 
-    boxw = 40, boxy = 50;
-    
-    b = Bodies.rectangle((width / 2), 10, boxw, boxy, {
-        restitution: 1
-    });
-    floor = Bodies.rectangle(100, height-60, floorWidth, floorHeight, {
+//rectMode(RADIUS);
+    floor = new Box(1, (height)-90, width*2, 40, {
         isStatic: true,
-        chamfer: { radius: 10 }
+        restitution: 0
+
     });
 
-    World.add(world, floor);
-    World.add(world, b);
+     floor.draw();
+
+       console.log(floor);
+    
+    b1 = new Box(width / 2, 20, 60, 50, {
+        restitution: 1.2,
+    });
+
+    b2 = new Box(100, 20, 50, 50, {
+        restitution: 1.5,
+    });
+
+  /*   b3 = new Box(90, -40, 40, 40, {
+        restitution: 1.1,
+    });
+ */
+
 
     Engine.run(engine); //better than engine.update(engine) in draw, run in background faster!
 
-    //console.log(b);
 }
 
 function draw() {
-    background(0);
-  //  Engine.update(engine)
-    
-    rect(floor.position.x, floor.position.y, floorWidth, floorHeight);
-    rect(b.position.x, b.position.y, boxw, boxy);
+    background(30);
+  
+    floor.draw();
 
-
-    
-   /*  
-    World.add(world,
-        Bodies.circle(310, 40, 30, { isStatic: false })
-    );
-
-    World.add(world, [
-        rect(10, 10, 20, 30),
-        rect(40, 80, 20, 10),
-
-        // walls
-        Bodies.rectangle(400, 0, 800, 50, { isStatic: true }),
-        Bodies.rectangle(400, 600, 800, 50, { isStatic: true }),
-        Bodies.rectangle(800, 300, 50, 600, { isStatic: true }),
-        Bodies.rectangle(0, 300, 50, 600, { isStatic: true })
-    ]); */
+    b1.draw();
+    b2.draw();
+   // b3.draw();
 }
