@@ -7,6 +7,7 @@ var Engine = Matter.Engine,
 var engine, world;
 var b, floor;
 let floorWidth, floorHeight;
+let boxy, boxw;
 
 function setup() {
     createCanvas(600, 400);
@@ -15,20 +16,23 @@ function setup() {
      // add a box
     floorHeight = 50;
     floorWidth = width;
+
+    boxw = 40, boxy = 50;
     
-    b = Bodies.rectangle((width / 2), 10, 50, 50);
-    floor = Bodies.rectangle((50), height-20, floorWidth, floorHeight, {
+    b = Bodies.rectangle((width / 2), 10, boxw, boxy, {
+        restitution: 1
+    });
+    floor = Bodies.rectangle(100, height-60, floorWidth, floorHeight, {
         isStatic: true,
         chamfer: { radius: 10 }
     });
 
     World.add(world, floor);
-
     World.add(world, b);
 
     Engine.run(engine); //better than engine.update(engine) in draw, run in background faster!
 
-
+    //console.log(b);
 }
 
 function draw() {
@@ -36,7 +40,9 @@ function draw() {
   //  Engine.update(engine)
     
     rect(floor.position.x, floor.position.y, floorWidth, floorHeight);
-    rect(b.position.x, b.position.y, 50, 50);
+    rect(b.position.x, b.position.y, boxw, boxy);
+
+
     
    /*  
     World.add(world,
